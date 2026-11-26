@@ -142,6 +142,14 @@ button, select, input, textarea {
   border-color: rgba(14, 165, 233, 0.35);
 }
 
+.nav-external {
+  text-decoration: none;
+  margin-top: 8px;
+  border-color: rgba(52, 211, 153, 0.3);
+  background: rgba(52, 211, 153, 0.08);
+  color: var(--accent);
+}
+
 .nav-icon {
   font-size: 1.08rem;
   width: 22px;
