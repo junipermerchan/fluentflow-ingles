@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FluentFlow — Entrenamiento Completo para Aprender Inglés</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">🌎</div>
+        <div>
+          <h1>FluentFlow</h1>
+          <span class="brand-sub">Inglés Real · Paso a Paso</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu" aria-label="Navegación principal">
+        <button class="nav-item active" data-view="dashboard">
+          <span class="nav-icon">🎯</span>
+          <span>Plan y Objetivos</span>
+        </button>
+        <button class="nav-item" data-view="vocab">
+          <span class="nav-icon">🃏</span>
+          <span>Vocabulario SRS</span>
+        </button>
+        <button class="nav-item" data-view="reading">
+          <span class="nav-icon">📖</span>
+          <span>Lectura Activa</span>
+        </button>
+        <button class="nav-item" data-view="listening">
+          <span class="nav-icon">🎧</span>
+          <span>Escucha y Dictado</span>
+        </button>
+        <button class="nav-item" data-view="builder">
+          <span class="nav-icon">🧩</span>
+          <span>Armar Oraciones</span>
+        </button>
+        <button class="nav-item" data-view="memory">
+          <span class="nav-icon">⚡</span>
+          <span>Memoria de Palabras</span>
+        </button>
+        <button class="nav-item" data-view="immersion">
+          <span class="nav-icon">⏱️</span>
+          <span>Inmersión y Hábitos</span>
+        </button>
+        <button class="nav-item" data-view="guide">
+          <span class="nav-icon">📘</span>
+          <span>Método y Guía</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="level-card">
+          <div class="level-header">
+            <span id="sidebar-level">Nivel A1 · Nv. 1</span>
+            <span id="sidebar-xp">0 / 100 XP</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="sidebar-xp-bar" style="width: 0%"></div>
+          </div>
+          <div class="streak-row">
+            <span>🔥 Racha: <strong id="sidebar-streak">0 días</strong></span>
+          </div>
+        </div>
+        <div class="voice-box">
+          <div class="voice-box-header">
+            <span>🎙️ Voz Nativa</span>
+            <span class="voice-pill" id="voice-engine-pill">Neural HD</span>
+          </div>
+          <select id="voice-select" class="voice-select" aria-label="Seleccionar voz nativa">
+            <option value="en-US-AvaNeural">Ava (EE.UU. · Natural)</option>
+            <option value="en-US-AndrewNeural">Andrew (EE.UU. · Cálida)</option>
+            <option value="en-GB-SoniaNeural">Sonia (Reino Unido)</option>
+            <option value="en-GB-RyanNeural">Ryan (Reino Unido)</option>
+            <option value="en-AU-NatashaNeural">Natasha (Australia)</option>
+          </select>
+        </div>
+        <div class="footer-actions">
+          <button id="btn-test-voice" class="btn-icon" title="Probar voz nativa">🔊 Probar</button>
+          <button id="toggle-theme" class="btn-icon" title="Cambiar tema">☀️ Claro</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- ==================== VIEW: DASHBOARD ==================== -->
+      <section id="view-dashboard" class="view active">
+        <header class="view-header">
+          <div>
+            <h2>Tu Plan Maestro para Dominar el Inglés</h2>
+            <p class="subtitle">Combina memoria de trabajo, repetición espaciada, lectura activa y escucha real todos los días.</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-secondary" id="btn-export-csv">📥 Exportar CSV</button>
+            <button class="btn btn-primary" id="btn-start-daily">▶ Iniciar Rutina de Hoy</button>
+          </div>
+        </header>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-label">Rutina de Hoy</span>
+            <strong class="kpi-value" id="kpi-daily-pct">0%</strong>
+            <div class="progress-bar"><div class="progress-fill" id="kpi-daily-bar" style="width:0%"></div></div>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Palabras Dominadas</span>
+            <strong class="kpi-value" id="kpi-words-mastered">0</strong>
+            <span class="kpi-meta" id="kpi-words-total">de 0 tarjetas en tu mazo</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Lecturas Completadas</span>
+            <strong class="kpi-value" id="kpi-readings">0</strong>
+            <span class="kpi-meta">Objetivo: 4 lecturas activas</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Sesiones Totales</span>
+            <strong class="kpi-value" id="kpi-sessions">0</strong>
+            <span class="kpi-meta">Meta: 28 sesiones (4 semanas)</span>
+          </div>
+        </div>
+
+        <!-- Daily Steps -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>📋 Pasos de Hoy (Rutina Diaria de 20–25 min)</h3>
+              <p class="muted">Cada paso se marca automáticamente al completar el ejercicio. Sigue el orden para máxima retención.</p>
+            </div>
+            <span class="badge" id="today-date-badge">Hoy</span>
+          </div>
+          <div class="daily-steps" id="daily-steps-list"></div>
+        </div>
+
+        <!-- 4-Week Mastery Roadmap -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>🗺️ Ruta de 4 Semanas hacia la Fluidez</h3>
+              <p class="muted">Objetivos concretos y medibles para pasar de entender palabras sueltas a pensar en inglés.</p>
+            </div>
+          </div>
+          <div class="roadmap-grid" id="roadmap-container"></div>
+        </div>
+
+        <!-- Chart & History -->
+        <div class="two-col">
+          <div class="card">
+            <h3>📈 Evolución de Precisión (Últimas 15 sesiones)</h3>
+            <div class="chart-wrapper">
+              <svg id="progress-chart" viewBox="0 0 500 180" preserveAspectRatio="none"></svg>
+              <p class="muted center" id="chart-empty">Completa tu primera práctica para ver tu curva de evolución.</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>🕒 Historial Reciente</h3>
+              <button class="btn-text danger" id="btn-reset-data">Reiniciar datos</button>
+            </div>
+            <ul class="history-list" id="history-list">
+              <li class="muted">Aún no hay sesiones registradas.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: VOCABULARY SRS ==================== -->
+      <section id="view-vocab" class="view">
+        <header class="view-header">
+          <div>
+            <h2>🃏 Vocabulario con Repetición Espaciada (SRS)</h2>
+            <p class="subtitle">Escucha la palabra en contexto, intenta recordarla antes de voltear la tarjeta y evalúa qué tan fácil fue.</p>
+          </div>
+        </header>
+
+        <div class="instructions-box">
+          <h4>📖 Cómo entrenar vocabulario sin olvidarlo</h4>
+          <ol>
+            <li>Elige tu nivel y pulsa <strong>🔊 Escuchar</strong> para entrenar tu oído primero.</li>
+            <li>Intenta recordar el significado y decir una frase en voz alta <strong>antes</strong> de pulsar "Mostrar respuesta".</li>
+            <li>Califica honestamente: <strong>Otra vez</strong> (la verás enseguida), <strong>Bien</strong> (avanza en tu memoria), <strong>Fácil</strong> (la marca como dominada más rápido).</li>
+          </ol>
+        </div>
+
+        <div class="game-panel center-panel">
+          <div class="game-controls-bar">
+            <label>
+              Nivel:
+              <select id="vocab-level-filter">
+                <option value="all">Todos los niveles</option>
+                <option value="A1-A2" selected>A1–A2 (Esencial)</option>
+                <option value="B1">B1 (Intermedio)</option>
+                <option value="B2-C1">B2–C1 (Avanzado / Phrasal Verbs)</option>
+              </select>
+            </label>
+            <button class="btn btn-secondary btn-sm" id="vocab-speak-normal">🔊 Escuchar (1.0x)</button>
+            <button class="btn btn-secondary btn-sm" id="vocab-speak-slow">🐢 Lento (0.75x)</button>
+            <button class="btn btn-secondary btn-sm" id="vocab-toggle-add">➕ Añadir palabra</button>
+          </div>
+
+          <!-- Add custom word form -->
+          <form id="vocab-add-form" class="add-word-form hidden">
+            <input type="text" id="new-word-en" placeholder="Palabra o frase en inglés (ej. breakthrough)" required />
+            <input type="text" id="new-word-es" placeholder="Significado en español (ej. gran avance)" required />
+            <input type="text" id="new-word-ex" placeholder="Ejemplo en inglés (opcional)" />
+            <select id="new-word-lvl">
+              <option value="A1-A2">A1–A2</option>
+              <option value="B1">B1</option>
+              <option value="B2-C1">B2–C1</option>
+            </select>
+            <button type="submit" class="btn btn-primary btn-sm">Guardar tarjeta</button>
+          </form>
+
+          <div class="game-status-bar">
+            <span>Tarjetas repasadas hoy: <strong id="vocab-reviewed-today">0 / 8</strong></span>
+            <span>Nivel tarjeta: <strong id="vocab-card-lvl">—</strong></span>
+            <span>Estado: <strong id="vocab-card-box">Nueva</strong></span>
+          </div>
+
+          <div class="flashcard" id="flashcard">
+            <div class="flashcard-front">
+              <span class="badge" id="fc-tag">A1-A2</span>
+              <div class="fc-word" id="fc-word">—</div>
+              <div class="fc-phonetic" id="fc-phonetic"></div>
+              <p class="fc-example" id="fc-example"></p>
+            </div>
+            <div class="flashcard-back hidden" id="fc-back">
+              <hr class="divider" />
+              <div class="fc-translation" id="fc-translation">—</div>
+              <p class="muted" id="fc-example-es"></p>
+            </div>
+          </div>
+
+          <div id="vocab-reveal-wrap">
+            <button class="btn btn-primary" id="vocab-reveal-btn">👁️ Mostrar respuesta</button>
+          </div>
+
+          <div class="srs-buttons hidden" id="vocab-rate-wrap">
+            <button class="btn btn-danger-soft" data-rate="0">🔁 Otra vez</button>
+            <button class="btn btn-warn-soft" data-rate="1">😅 Difícil</button>
+            <button class="btn btn-primary" data-rate="2">👍 Bien</button>
+            <button class="btn btn-success-soft" data-rate="3">🚀 Fácil (Dominada)</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: ACTIVE RECALL READING ==================== -->
+      <section id="view-reading" class="view">
+        <header class="view-header">
+          <div>
+            <h2>📖 Lectura con Recuerdo Activo (Active Recall)</h2>
+            <p class="subtitle">Lee y escucha textos reales, luego oculta el texto y responde desde tu memoria de trabajo.</p>
+          </div>
+        </header>
+
+        <div class="instructions-box">
+          <h4>📖 Protocolo en 2 pasos</h4>
+          <ol>
+            <li><strong>Paso 1 (Input):</strong> Lee el texto y escúchalo con el botón de audio. Solo usa "Ver traducción" si realmente te atascas.</li>
+            <li><strong>Paso 2 (Recuerdo Activo):</strong> Pulsa <strong>"Ocultar texto y hacer test"</strong>. Responde las 3 preguntas sin mirar y escribe un resumen de 1–2 frases en inglés.</li>
+          </ol>
+        </div>
+
+        <div class="game-panel">
+          <div class="game-controls-bar">
+            <label>
+              Texto:
+              <select id="reading-select"></select>
+            </label>
+            <button class="btn btn-secondary btn-sm" id="reading-play-audio">🔊 Escuchar lectura</button>
+            <button class="btn btn-secondary btn-sm" id="reading-stop-audio">⏹ Parar audio</button>
+            <button class="btn btn-secondary btn-sm" id="reading-toggle-es">🌐 Ver/Ocultar traducción</button>
+          </div>
+
+          <article class="reading-card" id="reading-text-box">
+            <div class="card-header">
+              <h3 id="reading-title">—</h3>
+              <span class="badge" id="reading-level-badge">A2</span>
+            </div>
+            <p class="reading-body" id="reading-body"></p>
+            <p class="reading-translation hidden" id="reading-translation"></p>
+            <div class="reading-vocab-chips" id="reading-vocab-chips"></div>
+            <div style="margin-top: 16px;">
+              <button class="btn btn-primary" id="reading-start-quiz">🧠 Ocultar texto y comenzar Recuerdo Activo</button>
+            </div>
+          </article>
+
+          <form class="reading-quiz hidden" id="reading-quiz-form">
+            <h3>Responde sin mirar el texto:</h3>
+            <div id="reading-questions-container"></div>
+            <div class="summary-box">
+              <label for="reading-summary-input"><strong>Resumen activo (en inglés):</strong> Escribe 1 o 2 frases resumiendo la idea principal:</label>
+              <textarea id="reading-summary-input" rows="3" placeholder="Example: The text explains how small daily habits..."></textarea>
+            </div>
+            <div class="quiz-actions">
+              <button type="button" class="btn btn-secondary" id="reading-back-text">← Volver al texto</button>
+              <button type="submit" class="btn btn-primary">✓ Comprobar respuestas</button>
+            </div>
+          </form>
+
+          <div class="result-banner hidden" id="reading-result"></div>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: LISTENING & DICTATION ==================== -->
+      <section id="view-listening" class="view">
+        <header class="view-header">
+          <div>
+            <h2>🎧 Escucha Activa, Dictado y Shadowing</h2>
+            <p class="subtitle">Entrena tu oído para reconocer inglés hablado real y retener frases completas en tu memoria de trabajo.</p>
+          </div>
+        </header>
+
+        <div class="instructions-box">
+          <h4>📖 Instrucciones paso a paso</h4>
+          <ol>
+            <li>Pulsa <strong>🔊 Escuchar frase</strong> (puedes usar velocidad lenta 0.75x si la necesitas).</li>
+            <li>Escribe exactamente lo que escuchaste en inglés y pulsa <strong>Comprobar</strong>.</li>
+            <li><strong>Shadowing (obligatorio):</strong> después de ver la respuesta correcta, vuelve a escucharla y <strong>repítela en voz alta</strong> imitando el ritmo y la entonación.</li>
+          </ol>
+        </div>
+
+        <div class="game-panel center-panel">
+          <div class="game-controls-bar">
+            <label>
+              Nivel:
+              <select id="listen-level">
+                <option value="A1-A2" selected>A1–A2 (Frases cotidianas)</option>
+                <option value="B1">B1 (Trabajo y viajes)</option>
+                <option value="B2-C1">B2–C1 (Expresiones naturales)</option>
+              </select>
+            </label>
+            <button class="btn btn-primary" id="listen-start-btn">▶ Nueva Ronda (5 frases)</button>
+          </div>
+
+          <div class="game-status-bar">
+            <span>Frase: <strong id="listen-progress">0 / 5</strong></span>
+            <span>Precisión media: <strong id="listen-avg">0%</strong></span>
+          </div>
+
+          <div class="listen-stage hidden" id="listen-stage">
+            <div class="listen-audio-controls">
+              <button type="button" class="btn btn-primary" id="listen-play-normal">🔊 Escuchar (1.0x)</button>
+              <button type="button" class="btn btn-secondary" id="listen-play-slow">🐢 Escuchar lento (0.75x)</button>
+              <button type="button" class="btn btn-secondary" id="listen-hint-btn">💡 Pista (traducción)</button>
+            </div>
+            <p class="muted hidden" id="listen-hint-text"></p>
+
+            <form id="listen-form" class="listen-form">
+              <input type="text" id="listen-input" autocomplete="off" placeholder="Escribe la frase en inglés..." />
+              <button type="submit" class="btn btn-primary">Comprobar</button>
+            </form>
+
+            <div class="diff-box hidden" id="listen-diff"></div>
+            <button type="button" class="btn btn-primary hidden" id="listen-next-btn">Siguiente frase →</button>
+          </div>
+
+          <div class="result-banner hidden" id="listen-result"></div>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: SENTENCE BUILDER ==================== -->
+      <section id="view-builder" class="view">
+        <header class="view-header">
+          <div>
+            <h2>🧩 Constructor de Oraciones y Gramática</h2>
+            <p class="subtitle">Aprende a estructurar frases en inglés sin traducir palabra por palabra.</p>
+          </div>
+        </header>
+
+        <div class="instructions-box">
+          <h4>📖 Instrucciones</h4>
+          <ol>
+            <li>Lee la frase en español y el enfoque gramatical indicado.</li>
+            <li>Haz clic en las palabras en inglés en el orden correcto para construir la oración (haz clic en una palabra puesta para quitarla).</li>
+            <li>Completa 5 oraciones para terminar la sesión y escucha siempre la pronunciación final.</li>
+          </ol>
+        </div>
+
+        <div class="game-panel center-panel">
+          <div class="game-controls-bar">
+            <label>
+              Nivel:
+              <select id="builder-level">
+                <option value="A1-A2" selected>A1–A2 (Presente, Pasado, Futuro)</option>
+                <option value="B1">B1 (Present Perfect, Modales, Condicionales)</option>
+                <option value="B2-C1">B2–C1 (Estructuras avanzadas y Phrasal Verbs)</option>
+              </select>
+            </label>
+            <button class="btn btn-primary" id="builder-start-btn">▶ Comenzar (5 oraciones)</button>
+          </div>
+
+          <div class="game-status-bar">
+            <span>Oración: <strong id="builder-progress">0 / 5</strong></span>
+            <span>Aciertos: <strong id="builder-score">0</strong></span>
+          </div>
+
+          <div class="builder-stage hidden" id="builder-stage">
+            <span class="badge" id="builder-grammar-tag">Gramática</span>
+            <h3 id="builder-prompt-es" class="builder-prompt">—</h3>
+
+            <div class="builder-answer-zone" id="builder-answer-zone" aria-label="Tu oración"></div>
+            <div class="builder-word-bank" id="builder-word-bank" aria-label="Banco de palabras"></div>
+
+            <div class="builder-actions">
+              <button type="button" class="btn btn-secondary" id="builder-clear-btn">↺ Limpiar</button>
+              <button type="button" class="btn btn-primary" id="builder-check-btn">✓ Comprobar</button>
+              <button type="button" class="btn btn-primary hidden" id="builder-next-btn">Siguiente →</button>
+            </div>
+            <div class="result-banner hidden" id="builder-feedback"></div>
+          </div>
+
+          <div class="result-banner hidden" id="builder-result"></div>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: WORD MEMORY SPRINT ==================== -->
+      <section id="view-memory" class="view">
+        <header class="view-header">
+          <div>
+            <h2>⚡ Sprint de Memoria de Palabras (Memoria de Trabajo + Inglés)</h2>
+            <p class="subtitle">Memoriza pares de palabras Inglés ↔ Español en pocos segundos y recupéralos sin mirar.</p>
+          </div>
+        </header>
+
+        <div class="instructions-box">
+          <h4>📖 Instrucciones</h4>
+          <ol>
+            <li>Durante <strong>10 segundos</strong> verás 5 pares de palabras (Inglés ↔ Español). Crea imágenes mentales rápidas para recordarlas.</li>
+            <li>Cuando desaparezcan, te mostraremos cada palabra en español y deberás elegir (o escribir) su equivalente en inglés.</li>
+            <li><strong>Objetivo:</strong> lograr ≥80% de aciertos para expandir tu memoria fonológica en inglés.</li>
+          </ol>
+        </div>
+
+        <div class="game-panel center-panel">
+          <div class="game-controls-bar">
+            <label>
+              Nivel:
+              <select id="memory-level">
+                <option value="A1-A2" selected>A1–A2</option>
+                <option value="B1">B1</option>
+                <option value="B2-C1">B2–C1</option>
+              </select>
+            </label>
+            <button class="btn btn-primary" id="memory-start-btn">▶ Iniciar Sprint (5 pares)</button>
+          </div>
+
+          <div id="memory-study-phase" class="hidden" style="width:100%;max-width:560px;">
+            <div class="muted" style="margin-bottom:8px;">Memoriza estos 5 pares — Tiempo restante: <strong id="memory-countdown">10s</strong></div>
+            <div class="progress-bar" style="margin-bottom:14px;"><div class="progress-fill" id="memory-timer-bar" style="width:100%"></div></div>
+            <div class="memory-pairs-grid" id="memory-pairs-list"></div>
+          </div>
+
+          <div id="memory-recall-phase" class="hidden" style="width:100%;max-width:540px;">
+            <p class="muted">Pregunta <strong id="memory-q-num">1 / 5</strong> — ¿Cómo se dice en inglés?</p>
+            <h3 id="memory-q-es" class="builder-prompt" style="margin:12px 0;">—</h3>
+            <div class="memory-options" id="memory-options"></div>
+          </div>
+
+          <div class="result-banner hidden" id="memory-result"></div>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: IMMERSION & HABITS ==================== -->
+      <section id="view-immersion" class="view">
+        <header class="view-header">
+          <div>
+            <h2>⏱️ Inmersión Diaria y Hábitos de Fluidez</h2>
+            <p class="subtitle">Estudiar reglas no basta: necesitas contacto diario real con el idioma.</p>
+          </div>
+        </header>
+
+        <div class="two-col">
+          <div class="card center-panel">
+            <h3>Temporizador de Inmersión Total</h3>
+            <p class="muted">Mira un video, escucha un podcast o lee un artículo 100% en inglés (sin subtítulos en español).</p>
+            <div class="timer-circle">
+              <span id="pomo-display">20:00</span>
+            </div>
+            <div class="timer-presets">
+              <button class="btn btn-secondary btn-sm" data-minutes="10">10 min</button>
+              <button class="btn btn-secondary btn-sm active-preset" data-minutes="20">20 min</button>
+              <button class="btn btn-secondary btn-sm" data-minutes="30">30 min</button>
+            </div>
+            <div class="timer-actions">
+              <button class="btn btn-primary" id="pomo-start">▶ Iniciar</button>
+              <button class="btn btn-secondary" id="pomo-pause">⏸ Pausar</button>
+              <button class="btn btn-secondary" id="pomo-reset">↺ Reiniciar</button>
+            </div>
+            <p class="muted" id="pomo-status">Completa 1 bloque de inmersión hoy para sumar +40 XP.</p>
+          </div>
+
+          <div class="card">
+            <h3>🌿 Checklist Diario de Inglés Real</h3>
+            <p class="muted">Pequeñas acciones cotidianas que transforman el inglés pasivo en fluidez activa.</p>
+            <div class="habits-list" id="habits-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW: GUIDE ==================== -->
+      <section id="view-guide" class="view">
+        <header class="view-header">
+          <div>
+            <h2>📘 Método Científico para Aprender Inglés al 100%</h2>
+            <p class="subtitle">Los 4 pilares que realmente aceleran la adquisición de un idioma.</p>
+          </div>
+        </header>
+
+        <div class="guide-grid">
+          <article class="card">
+            <h3>1. Input Comprensible + Recuerdo Activo</h3>
+            <p>Aprenderás mucho más rápido leyendo y escuchando material donde entiendes el <strong>75–85%</strong> y deduces el resto por contexto, en lugar de memorizar listas aisladas.</p>
+            <p>Después de leer o escuchar, <strong>cierra el texto y explica en voz alta</strong> lo que entendiste. Ese esfuerzo de recuperación es lo que fija el idioma en tu memoria a largo plazo.</p>
+          </article>
+
+          <article class="card">
+            <h3>2. Repetición Espaciada (SRS)</h3>
+            <p>Tu cerebro olvida lo que no usa. El sistema SRS te muestra cada palabra justo antes de que la olvides: al día siguiente, a los 3 días, a la semana, al mes.</p>
+            <p><strong>Meta realista:</strong> dominar 10 palabras/frases útiles al día = <strong>300 palabras al mes</strong> (con las 1,000 palabras más frecuentes entiendes más del 80% de las conversaciones cotidianas).</p>
+          </article>
+
+          <article class="card">
+            <h3>3. Técnica de Shadowing (Hablar con fluidez)</h3>
+            <p>Escucha una frase nativa y repítela <strong>inmediatamente en voz alta</strong> imitando la velocidad, las pausas y la entonación (no solo las palabras).</p>
+            <p>Hacer 5 minutos de <em>shadowing</em> al día entrena los músculos de la boca y elimina el bloqueo mental al hablar.</p>
+          </article>
+
+          <article class="card">
+            <h3>4. Rutina Diaria Recomendada (25 min)</h3>
+            <ol>
+              <li><strong>5 min — Vocabulario SRS:</strong> repasa 8 tarjetas en voz alta.</li>
+              <li><strong>6 min — Lectura Activa:</strong> lee, escucha y haz el test sin mirar.</li>
+              <li><strong>5 min — Escucha y Dictado:</strong> 5 frases + shadowing en voz alta.</li>
+              <li><strong>4 min — Armar Oraciones o Sprint de Memoria.</strong></li>
+              <li><strong>5–15 min extra — Inmersión:</strong> podcast, serie o YouTube en inglés.</li>
+            </ol>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
