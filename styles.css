@@ -278,6 +278,10 @@ button, select, input, textarea {
   flex-wrap: wrap;
 }
 
+.header-actions a.btn {
+  text-decoration: none;
+}
+
 .subtitle {
   color: var(--text-muted);
   margin-top: 4px;
