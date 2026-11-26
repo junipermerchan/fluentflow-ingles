@@ -1,6 +1,13 @@
 # 🌎 FluentFlow — Entrenamiento Completo para Aprender Inglés
 
-Aplicación web interactiva para aprender inglés combinando **memoria de trabajo, repetición espaciada (SRS), lectura con recuerdo activo, escucha/dictado y voces neuronales nativas**.
+### 🚀 [Abrir FluentFlow en Vivo (Web)](https://junipermerchan.github.io/fluentflow-ingles/)
+
+👉 **Enlace directo:** https://junipermerchan.github.io/fluentflow-ingles/  
+🧠 **App hermana de Memoria de Trabajo (NeuroFlow):** https://junipermerchan.github.io/neuroflow-memoria/
+
+---
+
+Aplicación web interactiva para aprender inglés combinando **memoria de trabajo, repetición espaciada (SRS), lectura con recuerdo activo, escucha/dictado y voces nativas**.
 
 ## Características
 - **Plan Maestro y Ruta de 4 Semanas (A1–A2 → B2+):** rutina diaria de 6 pasos, racha, XP, gráfico de evolución y **exportación de estadísticas y vocabulario en CSV**.
@@ -10,14 +17,11 @@ Aplicación web interactiva para aprender inglés combinando **memoria de trabaj
   - **Escucha, Dictado y Shadowing** con comparación palabra por palabra.
   - **Constructor de Oraciones y Gramática** interactivo.
   - **Sprint de Memoria de Palabras** (Inglés ↔ Español).
-- **Voces Neuronales Nativas (Neural HD):** 5 voces nativas (EE.UU., Reino Unido, Australia) con caché local MP3 vía `server.py` (y respaldo automático con voces del navegador si se abre estáticamente en GitHub Pages).
+- **Audio en Web y Local:** funciona directo en GitHub Pages usando las voces naturales del navegador, o localmente con voces neuronales HD vía `server.py`.
 
-## Cómo ejecutar con Voces Neuronales HD (Local)
+## Uso local opcional (Voces Neuronales HD)
 ```bash
 pip install -r requirements.txt
 python server.py
 ```
-Luego abre `http://localhost:8766` en tu navegador.
-
-## Uso estático (GitHub Pages / sin servidor)
-También funciona directamente abriendo `index.html` o en GitHub Pages usando las voces naturales del navegador.
+Luego abre `http://localhost:8766`.
